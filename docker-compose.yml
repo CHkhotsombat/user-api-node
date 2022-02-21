@@ -2,7 +2,7 @@ version: "3.4"
 volumes:
   node_modules:
 services:
-  user-api-node:
+  app:
     build:
         context: .
         dockerfile: Dockerfile
