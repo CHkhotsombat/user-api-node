@@ -1,5 +1,6 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const createError = require('http-errors');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -12,9 +13,17 @@ router.get('/', function(req, res, next) {
       {
         "firstName": "จันทร์",
         "lastName": "เจ้าขา"
+      },
+      {
+        "firstName": "สัญญา",
+        "lastName": "สายันต์"
       }
     ]
   })
 });
+// Method not allowed
+router.all('*', (req, res, next) => {  
+  next(createError(405));
+})
 
 module.exports = router;
