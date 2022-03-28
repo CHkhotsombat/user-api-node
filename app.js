@@ -6,6 +6,7 @@ const logger = require('morgan');
 const { htmlStatus } = require('./app/utils/constants');
 const indexRouter = require('./app/routes/index');
 const app = express();
+const _ = require('lodash');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -28,12 +29,22 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   
   const status = err.status || 500
-  const html_status = htmlStatus()[`${status}`] || {}
+  const resStatus = htmlStatus()[`${status}`] || {}
 
-  res.status(status).json({
-    code: html_status.code,
-    message: err.message || html_status.message
-  })
+  if (!_.isEmpty(err.errors)) {
+    res.status(status).json({
+      code: resStatus.code,
+      message: err.message || resStatus.message,
+      errors: _.map(err.errors, ((obj) => (   
+        obj.message?.toString().replaceAll('"', "")
+      )))  
+    })
+  } else {
+    res.status(status).json({
+      code: resStatus.code,
+      message: err.message || resStatus.message
+    })
+  }  
 });
 
 module.exports = app;

@@ -17,7 +17,7 @@ const htmlStatus = () => {
     },
     '400': {
       status: 400,
-      code: 'bad_request',
+      code: 'badRequest',
       message: 'Bad Request.'
     },
     '401': {
@@ -32,22 +32,22 @@ const htmlStatus = () => {
     },
     '404': {
       status: 404,
-      code: 'not_found',
+      code: 'notFound',
       message: 'Not found.'
     },
     '405': {
       status: 405,
-      code: 'method_not_allowed',
+      code: 'methodNotAllowed',
       message: 'HTTP Method Not Allowed.'
     },  
     '422': {
       status: 422,
-      code: 'validate_failed',
+      code: 'validateFailed',
       message: 'Validate Failed.'
     },
     '500': {
       status: 500,
-      code: 'server_error',
+      code: 'serverError',
       message: 'Internal Server Error.'
     }
   }

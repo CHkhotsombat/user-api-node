@@ -6,8 +6,8 @@ const apiV1 = require('./api/v1/index')
 router.get('/', function(req, res, next) {
   res.status(200).json({
     message: "Welcome to Node js User API",
-    node_version: process.versions?.node,
-    node_env: process.env.NODE_ENV,
+    nodeVersion: process.versions?.node,
+    nodeEnv: process.env.NODE_ENV,
     port: process.env.PORT,
   })
 })

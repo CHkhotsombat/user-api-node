@@ -1,29 +1,29 @@
-const pagination = (page, page_size) => {
-  let limit = page_size ? +(parseInt(page_size)) : 10
+const pagination = (page, pageSize) => {
+  let limit = pageSize ? +(parseInt(pageSize)) : 10
   let offset = page ? (parseInt(page) - 1) * limit : 0;
   offset = offset < 0 ? 0 : offset
 
   return { limit, offset }
 }
 
-const paging = (total_count, page, page_size) => {
+const paging = (totalCount, page, pageSize) => {
   return {
-    total_count,
+    totalCount,
     page,
-    page_size,
-    total_page: Math.ceil(total_count / page_size)
+    pageSize,
+    totalPage: Math.ceil(totalCount / pageSize)
   }
 }
 
 const responseWithPaging = (data) => {
   const { count, rows } = data.results
-  const { page, page_size } = data
+  const { page, pageSize } = data
 
   return { 
     code: 'success', 
     data: { 
       results: rows,
-      paging: paging(count, page, page_size)
+      paging: paging(count, page, pageSize)
     }
   }
 }

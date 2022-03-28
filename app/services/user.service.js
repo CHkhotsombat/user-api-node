@@ -10,25 +10,39 @@ const getUserList = async (params) => {
     where: {},
     attributes: [
       'id',
-      'first_name',
-      'last_name',
+      'firstName',
+      'lastName',
       'email',
       'status',
-      'created_at',
-      'updated_at'
+      'createdAt',
+      'updatedAt'
     ]
   });
 
   return users
 }
 
-const createUser = async (params) => {
-  const user = await User.create(params);
+const getOneUser = async (id) => {
+  return await User.findByPk(id)
+}
 
-  return user;
+const getOneUserByEmail = async (email) => {
+  const user = await User.findOne({
+    where: { 
+      email: email 
+    }
+  })
+
+  return user.get()
+}
+
+const createUser = async (params) => {
+  return await User.create(params);
 }
 
 module.exports = {
   getUserList,
+  getOneUser,
+  getOneUserByEmail,
   createUser
 }

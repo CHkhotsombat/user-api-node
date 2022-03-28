@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User', 
     {
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -27,28 +27,24 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('IN_ACTIVE', 'ACTIVE', 'UN_CONFIRM_EMAIL'),
       defaultValue: 'UN_CONFIRM_EMAIL'
     },
-    email_confirmed_at: DataTypes.DATE,
-    email_confirmation_token: DataTypes.STRING,
-    deleted_at: DataTypes.DATE,
-    created_at: DataTypes.DATE,
-    updated_at: DataTypes.DATE,    
+    emailConfirmedAt: DataTypes.DATE,
+    emailConfirmationToken: DataTypes.STRING,
+    deletedAt: DataTypes.DATE,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,    
   }, {
     sequelize,
-    underscored: true,
     modelName: 'User',
     tableName: 'users',
     paranoid: true,
     timestamp: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
-    deletedAt: 'deleted_at',
     indexes: [
       {
         unique: {
           msg: 'Email is already to used.'
         },
-        fields: ['email', 'deleted_at'],
-        name: 'idx_users_email_deleted_at'
+        fields: ['email', 'deletedAt'],
+        name: 'idxUsersEmailDeletedAt'
       }
     ],
     hooks: {
@@ -57,8 +53,8 @@ module.exports = (sequelize, DataTypes) => {
           const salt = await bcrypt.genSaltSync(10, 'a');
           user.password = bcrypt.hashSync(user.password, salt);
         }
-        user.email_confirmation_token = crypto.randomBytes(16).toString('hex');
-        user.deleted_at = null
+        user.emailConfirmationToken = crypto.randomBytes(16).toString('hex');
+        user.deletedAt = null
       }
     }
   });
