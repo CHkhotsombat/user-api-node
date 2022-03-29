@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-const validateUserSchema = (body) => {
+const validateCreateUser = (body) => {
   const userSchema = Joi.object({
     firstName: Joi.string().trim().required(),
     lastName: Joi.string().trim(),
@@ -14,5 +14,5 @@ const validateUserSchema = (body) => {
 }
 
 module.exports = {
-  validateUserSchema
+  validateCreateUser
 }

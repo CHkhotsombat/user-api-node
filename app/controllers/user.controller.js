@@ -1,7 +1,8 @@
 const createError = require('http-errors');
 const userService = require('../services/user.service');
 const { pagination, responseWithPaging } = require('../utils/apiHelpers');
-const { validateUserSchema } = require('../routes/schema/user.schema')
+const { validateCreateUser } = require('../routes/schema/user.schema')
+const { userEntity } = require('../entities/index')
 
 const getUserList = async (req, res, next) => {
   try {
@@ -21,14 +22,14 @@ const getUserList = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
   try {
-    const errors = validateUserSchema(req.body)
+    const errors = validateCreateUser(req.body)
 
     if (errors) {
       return next({status: 422, message: 'validate failed', errors: errors.details});
     }
 
     // validate uniq email
-    const user = await userService.getOneUserByEmail(req.body.email)
+    const user = await userService.findByEmail(req.body.email)
     if (user) {
       return next({status: 422, message: `user email : ${req.body.email} is already exists.`});
     }
@@ -44,7 +45,34 @@ const createUser = async (req, res, next) => {
   }
 }
 
+const findById = async (req, res, next) => {
+  try {
+    const user = await userService.findById(req.params.id)
+
+    res.status(200).json({
+      code: 'success',
+      data: userEntity.userDetail(user)
+    })
+  } catch (error) {
+    console.error('Find User by ID error', error);
+    next(createError(error));
+  }
+}
+
+const deleteUser = async (req, res, next) => {
+  try {
+    const _user = await userService.deleteUser(req.params.id)
+
+    res.sendStatus(204);
+  } catch (error) {
+    console.error('Delete User error', error);
+    next(createError(error));
+  }
+}
+
 module.exports = {
   getUserList,
-  createUser
+  createUser,
+  deleteUser,
+  findById
 }

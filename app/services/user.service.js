@@ -22,11 +22,11 @@ const getUserList = async (params) => {
   return users
 }
 
-const getOneUser = async (id) => {
+const findById = async (id) => {
   return await User.findByPk(id)
 }
 
-const getOneUserByEmail = async (email) => {
+const findByEmail = async (email) => {
   const user = await User.findOne({
     where: { 
       email: email 
@@ -40,9 +40,20 @@ const createUser = async (params) => {
   return await User.create(params);
 }
 
+const deleteUser = async (id) => {
+  const user = await User.destroy({
+    where: {
+      id: id
+    }
+  })
+
+  return user
+}
+
 module.exports = {
   getUserList,
-  getOneUser,
-  getOneUserByEmail,
-  createUser
+  findById,
+  findByEmail,
+  createUser,
+  deleteUser
 }
