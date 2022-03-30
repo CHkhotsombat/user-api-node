@@ -28,8 +28,16 @@ const responseWithPaging = (data) => {
   }
 }
 
+const errorNotFound = (message = "Not found") => {
+  return {
+    status: 404,
+    message: message
+  }
+}
+
 module.exports = {
   pagination,
   paging,
-  responseWithPaging
+  responseWithPaging,
+  errorNotFound
 }
