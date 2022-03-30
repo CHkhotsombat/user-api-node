@@ -1,3 +1,6 @@
+const _ = require('lodash')
+const { htmlStatus } = require('./constants')
+
 const pagination = (page, pageSize) => {
   let limit = pageSize ? +(parseInt(pageSize)) : 10
   let offset = page ? (parseInt(page) - 1) * limit : 0;
@@ -35,9 +38,29 @@ const errorNotFound = (message = "Not found") => {
   }
 }
 
+const errorValidateFailed = (opts = {}) => {
+  const { errors, message = htmlStatus(422).message } = opts
+  
+  if (Array.isArray(errors)) {
+    return {
+      status: 422, 
+      message: message, 
+      errors: _.map(errors, ((obj) => (   
+        obj.message?.toString().replaceAll('"', "")
+      )))
+    }
+  }
+
+  return {
+    status: 422, 
+    message: message,
+  }
+}
+
 module.exports = {
   pagination,
   paging,
   responseWithPaging,
-  errorNotFound
+  errorNotFound,
+  errorValidateFailed
 }

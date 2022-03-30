@@ -8,7 +8,7 @@ const validateCreateUser = (body) => {
     password: Joi.string().required()
   })
 
-  const { error, value } = userSchema.validate(body, { abortEarly: false })
+  const { error } = userSchema.validate(body, { abortEarly: false })
 
   return error
 }

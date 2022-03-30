@@ -1,6 +1,11 @@
 const createError = require('http-errors')
 const userService = require('../services/user.service')
-const { pagination, responseWithPaging, errorNotFound } = require('../utils/apiHelpers')
+const { 
+  pagination, 
+  responseWithPaging, 
+  errorNotFound, 
+  errorValidateFailed 
+} = require('../utils/apiHelpers')
 const { validateCreateUser } = require('../routes/schema/user.schema')
 const { userEntity } = require('../entities/index')
 
@@ -25,13 +30,15 @@ const createUser = async (req, res, next) => {
     const errors = validateCreateUser(req.body)
 
     if (errors) {
-      return next({status: 422, message: 'validate failed', errors: errors.details})
+      return next(errorValidateFailed({ errors: errors.details }))
     }
 
     // validate uniq email
     const user = await userService.findByEmail(req.body.email)
     if (user) {
-      return next({status: 422, message: `user email : ${req.body.email} is already exists.`})
+      return next(errorValidateFailed({ 
+        message: `user email : ${req.body.email} is already exists.`
+      }))
     }
 
     await userService.createUser(req.body)

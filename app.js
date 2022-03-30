@@ -29,15 +29,13 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   
   const status = err.status || 500
-  const resStatus = htmlStatus()[`${status}`] || {}
+  const resStatus = htmlStatus(status)
 
   if (!_.isEmpty(err.errors)) {
     res.status(status).json({
       code: resStatus.code,
       message: err.message || resStatus.message,
-      errors: _.map(err.errors, ((obj) => (   
-        obj.message?.toString().replaceAll('"', "")
-      )))  
+      errors: err.errors
     })
   } else {
     res.status(status).json({

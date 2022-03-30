@@ -1,5 +1,5 @@
-const htmlStatus = () => {
-  return {
+const htmlStatus = (status = '') => {
+  const allStatus = {
     '200': {
       status: 200,
       code: 'success',
@@ -51,8 +51,12 @@ const htmlStatus = () => {
       message: 'Internal Server Error.'
     }
   }
+
+  if (!status) return allStatus
+
+  return allStatus[`${status}`] || {}
 }
 
 module.exports = {
   htmlStatus
-};
+}
