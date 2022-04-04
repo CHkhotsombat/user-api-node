@@ -1,3 +1,4 @@
+import boom from '@hapi/boom'
 import models from '../models'
 const User = models.User;
 
@@ -22,8 +23,13 @@ export const getUserList = async (params) => {
   return users
 }
 
-export const findById = async (id) => {
-  return await User.findByPk(id)
+export const findById = async (id, opts = {}) => {
+  const { exceptNotFound = false } = opts
+  const user = await User.findByPk(id)
+  
+  if (!exceptNotFound && !user) throw boom.notFound('User not found.')
+
+  return user
 }
 
 export const findByEmail = async (email) => {

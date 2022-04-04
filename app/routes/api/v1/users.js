@@ -72,29 +72,24 @@ export async function findById (req, res, next) {
   try {
     const user = await userService.findById(req.params.id)
 
-    if (!user) return next(errorNotFound({ message: "User not found" }))
+    // if (!user) return next(errorNotFound({ message: "User not found" }))
 
     res.status(200).json({
       code: 'success',
       data: userEntity.userDetail(user)
     })
   } catch (error) {
-    console.error('Find User by ID error', error)
-    next(internalServerError(error))
+    next(error)
   }
 }
 
 export async function deleteUser (req, res, next) {
   try {
-    const user = await userService.findById(req.params.id)
-
-    if (!user) return next(errorNotFound({ message: "User not found" }))
-
+    await userService.findById(req.params.id)
     const _user = await userService.deleteUser(req.params.id)
 
     res.sendStatus(204)
   } catch (error) {
-    console.error('Delete User error', error)
-    next(internalServerError(error))
+    next(error)
   }
 }
