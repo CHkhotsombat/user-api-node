@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const createError = require('http-errors')
 const userService = require('../../../services/user.service')
 const { 
   pagination, 
   responseWithPaging, 
   errorNotFound, 
-  errorValidateFailed 
+  errorValidateFailed,
+  internalServerError
 } = require('../../../utils/apiHelpers')
 const { validateCreateUser } = require('./schema/user.schema')
 const { userEntity } = require('./entities/index')
@@ -34,7 +34,7 @@ export async function getUserList (req, res, next) {
 
     res.status(200).json(responseWithPaging({ results, page, pageSize }))
   } catch (error) {
-    next(createError(error))
+    next(internalServerError(error))
   }
 }
 
@@ -61,7 +61,7 @@ export async function createUser (req, res, next) {
     })
   } catch (error) {
     console.error('Create User error', error)
-    next(createError(error))
+    next(internalServerError(error))
   }
 }
 
@@ -69,7 +69,7 @@ export async function findById (req, res, next) {
   try {
     const user = await userService.findById(req.params.id)
 
-    if (!user) return next(errorNotFound("User not found"))
+    if (!user) return next(errorNotFound({ message: "User not found" }))
 
     res.status(200).json({
       code: 'success',
@@ -77,7 +77,7 @@ export async function findById (req, res, next) {
     })
   } catch (error) {
     console.error('Find User by ID error', error)
-    next(createError(error))
+    next(internalServerError(error))
   }
 }
 
@@ -88,7 +88,7 @@ export async function deleteUser (req, res, next) {
     res.sendStatus(204)
   } catch (error) {
     console.error('Delete User error', error)
-    next(createError(error))
+    next(internalServerError(error))
   }
 }
 

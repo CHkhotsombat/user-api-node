@@ -31,19 +31,33 @@ const responseWithPaging = (data) => {
   }
 }
 
-const errorNotFound = (message = "Not found") => {
+const errorNotFound = (opts = {}) => {
+  const htmlInfo = htmlStatus(404)
+  const { message = htmlInfo.message } = opts
+
   return {
-    status: 404,
+    status: htmlInfo.status,
+    message: message
+  }
+}
+
+const errorMethodNotAllowed = (opts = {}) => {
+  const htmlInfo = htmlStatus(405)
+  const { message = htmlInfo.message } = opts
+
+  return {
+    status: htmlInfo.status,
     message: message
   }
 }
 
 const errorValidateFailed = (opts = {}) => {
-  const { errors, message = htmlStatus(422).message } = opts
+  const status = 422
+  const { errors, message = htmlStatus(status).message } = opts
   
   if (Array.isArray(errors)) {
     return {
-      status: 422, 
+      status: status, 
       message: message, 
       errors: _.map(errors, ((obj) => (   
         obj.message?.toString().replaceAll('"', "")
@@ -52,8 +66,19 @@ const errorValidateFailed = (opts = {}) => {
   }
 
   return {
-    status: 422, 
-    message: message,
+    status,
+    message
+  }
+}
+
+const internalServerError = (opts = {}) => {
+  const status = 500
+  const { errors, message = htmlStatus(status).message } = opts
+
+  return {
+    status, 
+    message,
+    errors
   }
 }
 
@@ -62,5 +87,7 @@ module.exports = {
   paging,
   responseWithPaging,
   errorNotFound,
-  errorValidateFailed
+  errorMethodNotAllowed,
+  errorValidateFailed,
+  internalServerError
 }
