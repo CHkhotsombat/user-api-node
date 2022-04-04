@@ -1,12 +1,12 @@
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const { htmlStatus } = require('./app/utils/constants');
-const indexRouter = require('./app/routes/index');
+import express from 'express'
+import path from 'path'
+import cookieParser from 'cookie-parser'
+import logger from 'morgan'
+import { htmlStatus } from './app/utils/constants'
+import { router as indexRouter } from './app/routes'
+import _ from 'lodash'
+import { errorNotFound } from './app/utils/apiHelpers'
 const app = express();
-const _ = require('lodash');
-const { errorNotFound } = require('./app/utils/apiHelpers')
 
 app.use(logger('dev'));
 app.use(express.json());

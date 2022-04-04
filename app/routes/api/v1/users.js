@@ -1,15 +1,18 @@
-const express = require('express');
-const router = express.Router();
-const userService = require('../../../services/user.service')
-const { 
+
+import express from 'express'
+import * as userService from '../../../services/user.service'
+import { 
   pagination, 
   responseWithPaging, 
   errorNotFound, 
   errorValidateFailed,
   internalServerError
-} = require('../../../utils/apiHelpers')
-const { validateCreateUser } = require('./schema/user.schema')
-const { userEntity } = require('./entities/index')
+} from '../../../utils/apiHelpers'
+
+import { validateCreateUser } from './schema/user.schema'
+import * as userEntity from './entities/user.entity'
+
+export const router = express.Router()
 
 /* GET users listing. */
 router.get('/', getUserList)
@@ -83,6 +86,10 @@ export async function findById (req, res, next) {
 
 export async function deleteUser (req, res, next) {
   try {
+    const user = await userService.findById(req.params.id)
+
+    if (!user) return next(errorNotFound({ message: "User not found" }))
+
     const _user = await userService.deleteUser(req.params.id)
 
     res.sendStatus(204)
@@ -91,5 +98,3 @@ export async function deleteUser (req, res, next) {
     next(internalServerError(error))
   }
 }
-
-module.exports = router;

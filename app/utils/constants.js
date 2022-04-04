@@ -1,4 +1,4 @@
-const htmlStatus = (status = '') => {
+export const htmlStatus = (status = '') => {
   const allStatus = {
     '200': {
       status: 200,
@@ -55,8 +55,4 @@ const htmlStatus = (status = '') => {
   if (!status) return allStatus
 
   return allStatus[`${status}`] || {}
-}
-
-module.exports = {
-  htmlStatus
 }

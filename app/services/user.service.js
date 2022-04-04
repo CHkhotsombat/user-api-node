@@ -1,7 +1,7 @@
-const models = require('../models');
+import models from '../models'
 const User = models.User;
 
-const getUserList = async (params) => {
+export const getUserList = async (params) => {
   let { offset, limit } = params
 
   const users = await User.findAndCountAll({
@@ -22,11 +22,11 @@ const getUserList = async (params) => {
   return users
 }
 
-const findById = async (id) => {
+export const findById = async (id) => {
   return await User.findByPk(id)
 }
 
-const findByEmail = async (email) => {
+export const findByEmail = async (email) => {
   const user = await User.findOne({
     where: { 
       email: email 
@@ -36,11 +36,11 @@ const findByEmail = async (email) => {
   return user
 }
 
-const createUser = async (params) => {
+export const createUser = async (params) => {
   return await User.create(params);
 }
 
-const deleteUser = async (id) => {
+export const deleteUser = async (id) => {
   const user = await User.destroy({
     where: {
       id: id
@@ -48,12 +48,4 @@ const deleteUser = async (id) => {
   })
 
   return user
-}
-
-module.exports = {
-  getUserList,
-  findById,
-  findByEmail,
-  createUser,
-  deleteUser
 }

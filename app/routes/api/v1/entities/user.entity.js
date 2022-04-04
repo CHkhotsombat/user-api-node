@@ -1,4 +1,4 @@
-const userDetail = (user) => {
+export const userDetail = (user) => {
   const {
     id,
     firstName,
@@ -20,8 +20,4 @@ const userDetail = (user) => {
     createdAt,
     updatedAt
   }
-}
-
-module.exports = {
-  userDetail
 }

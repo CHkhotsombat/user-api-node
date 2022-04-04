@@ -1,6 +1,7 @@
-const express = require('express')
-const router = express.Router()
-const apiV1 = require('./api/v1/index')
+import express from 'express'
+import { router as apiV1 } from './api/v1'
+
+export const router = express.Router()
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -14,4 +15,3 @@ router.get('/', function(req, res, next) {
 
 router.use('/api/v1', apiV1)
 
-module.exports = router

@@ -1,6 +1,6 @@
-const Joi = require('joi')
+import Joi from 'joi'
 
-const validateCreateUser = (body) => {
+export const validateCreateUser = (body) => {
   const userSchema = Joi.object({
     firstName: Joi.string().trim().required(),
     lastName: Joi.string().trim(),
@@ -11,8 +11,4 @@ const validateCreateUser = (body) => {
   const { error } = userSchema.validate(body, { abortEarly: false })
 
   return error
-}
-
-module.exports = {
-  validateCreateUser
 }

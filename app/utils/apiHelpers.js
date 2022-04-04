@@ -1,7 +1,7 @@
-const _ = require('lodash')
-const { htmlStatus } = require('./constants')
+import _ from 'lodash'
+import { htmlStatus } from './constants'
 
-const pagination = (page, pageSize) => {
+export const pagination = (page, pageSize) => {
   let limit = pageSize ? +(parseInt(pageSize)) : 10
   let offset = page ? (parseInt(page) - 1) * limit : 0;
   offset = offset < 0 ? 0 : offset
@@ -9,7 +9,7 @@ const pagination = (page, pageSize) => {
   return { limit, offset }
 }
 
-const paging = (totalCount, page, pageSize) => {
+export const paging = (totalCount, page, pageSize) => {
   return {
     totalCount,
     page,
@@ -18,7 +18,7 @@ const paging = (totalCount, page, pageSize) => {
   }
 }
 
-const responseWithPaging = (data) => {
+export const responseWithPaging = (data) => {
   const { count, rows } = data.results
   const { page, pageSize } = data
 
@@ -31,7 +31,7 @@ const responseWithPaging = (data) => {
   }
 }
 
-const errorNotFound = (opts = {}) => {
+export const errorNotFound = (opts = {}) => {
   const htmlInfo = htmlStatus(404)
   const { message = htmlInfo.message } = opts
 
@@ -41,7 +41,7 @@ const errorNotFound = (opts = {}) => {
   }
 }
 
-const errorMethodNotAllowed = (opts = {}) => {
+export const errorMethodNotAllowed = (opts = {}) => {
   const htmlInfo = htmlStatus(405)
   const { message = htmlInfo.message } = opts
 
@@ -51,7 +51,7 @@ const errorMethodNotAllowed = (opts = {}) => {
   }
 }
 
-const errorValidateFailed = (opts = {}) => {
+export const errorValidateFailed = (opts = {}) => {
   const status = 422
   const { errors, message = htmlStatus(status).message } = opts
   
@@ -71,7 +71,7 @@ const errorValidateFailed = (opts = {}) => {
   }
 }
 
-const internalServerError = (opts = {}) => {
+export const internalServerError = (opts = {}) => {
   const status = 500
   const { errors, message = htmlStatus(status).message } = opts
 
@@ -80,14 +80,4 @@ const internalServerError = (opts = {}) => {
     message,
     errors
   }
-}
-
-module.exports = {
-  pagination,
-  paging,
-  responseWithPaging,
-  errorNotFound,
-  errorMethodNotAllowed,
-  errorValidateFailed,
-  internalServerError
 }

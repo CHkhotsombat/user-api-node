@@ -1,7 +1,8 @@
-const express = require('express')
-const router = express.Router()
-const usersRouter = require('./users')
-const { errorMethodNotAllowed } = require('../../../utils/apiHelpers')
+import express from 'express'
+import { router as usersRouter } from './users'
+import { errorMethodNotAllowed } from '../../../utils/apiHelpers'
+
+export const router = express.Router()
 
 // user routes
 router.use('/users', usersRouter)
@@ -10,5 +11,3 @@ router.use('/users', usersRouter)
 router.all(['/users'], (req, res, next) => {  
   next(errorMethodNotAllowed())
 })
-
-module.exports = router
