@@ -33,7 +33,7 @@ const findByEmail = async (email) => {
     }
   })
 
-  return user.get()
+  return user
 }
 
 const createUser = async (params) => {
