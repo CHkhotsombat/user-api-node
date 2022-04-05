@@ -17,7 +17,8 @@
 			"warn",
 			{ "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
 		],
-    "max-len": ["error", { "code": 100, "ignoreUrls": true }],
-    "semi": 0
+    "max-len": ["error", { "code": 100, "ignoreUrls": true, "ignoreComments": true }],
+    "semi": ["error", "never"],
+    "indent": ["error", 2]
   }
 }
