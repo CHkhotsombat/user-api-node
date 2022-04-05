@@ -7,7 +7,7 @@ export const userDetail = (user) => {
     status,
     emailConfirmedAt,
     createdAt,
-    updatedAt
+    updatedAt,
   } = user
 
   return {
@@ -18,6 +18,6 @@ export const userDetail = (user) => {
     status,
     emailConfirmedAt,
     createdAt,
-    updatedAt
+    updatedAt,
   }
 }

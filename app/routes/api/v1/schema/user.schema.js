@@ -5,7 +5,7 @@ export const validateCreateUser = (body) => {
     firstName: Joi.string().trim().required(),
     lastName: Joi.string().trim(),
     email: Joi.string().email().required(),
-    password: Joi.string().required()
+    password: Joi.string().required(),
   })
 
   const { error } = userSchema.validate(body, { abortEarly: false })

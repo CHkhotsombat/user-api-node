@@ -2,8 +2,8 @@ import _ from 'lodash'
 import { htmlStatus } from './constants'
 
 export const pagination = (page, pageSize) => {
-  let limit = pageSize ? +(parseInt(pageSize)) : 10
-  let offset = page ? (parseInt(page) - 1) * limit : 0;
+  let limit = pageSize ? +parseInt(pageSize) : 10
+  let offset = page ? (parseInt(page) - 1) * limit : 0
   offset = offset < 0 ? 0 : offset
 
   return { limit, offset }
@@ -14,7 +14,7 @@ export const paging = (totalCount, page, pageSize) => {
     totalCount,
     page,
     pageSize,
-    totalPage: Math.ceil(totalCount / pageSize)
+    totalPage: Math.ceil(totalCount / pageSize),
   }
 }
 
@@ -22,12 +22,12 @@ export const responseWithPaging = (data) => {
   const { count, rows } = data.results
   const { page, pageSize } = data
 
-  return { 
-    code: 'success', 
-    data: { 
+  return {
+    code: 'success',
+    data: {
       results: rows,
-      paging: paging(count, page, pageSize)
-    }
+      paging: paging(count, page, pageSize),
+    },
   }
 }
 
@@ -37,7 +37,7 @@ export const errorNotFound = (opts = {}) => {
 
   return {
     status: htmlInfo.status,
-    message: message
+    message: message,
   }
 }
 
@@ -47,27 +47,27 @@ export const errorMethodNotAllowed = (opts = {}) => {
 
   return {
     status: htmlInfo.status,
-    message: message
+    message: message,
   }
 }
 
 export const errorValidateFailed = (opts = {}) => {
   const status = 422
   const { errors, message = htmlStatus(status).message } = opts
-  
+
   if (Array.isArray(errors)) {
     return {
-      status: status, 
-      message: message, 
-      errors: _.map(errors, ((obj) => (   
-        obj.message?.toString().replaceAll('"', "")
-      )))
+      status: status,
+      message: message,
+      errors: _.map(errors, (obj) =>
+        obj.message?.toString().replaceAll('"', '')
+      ),
     }
   }
 
   return {
     status,
-    message
+    message,
   }
 }
 
@@ -76,8 +76,8 @@ export const internalServerError = (opts = {}) => {
   const { errors, message = htmlStatus(status).message } = opts
 
   return {
-    status, 
+    status,
     message,
-    errors
+    errors,
   }
 }

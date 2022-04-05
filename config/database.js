@@ -7,26 +7,26 @@ module.exports = {
     database: env.DATABASE_NAME,
     host: env.DATABASE_HOST,
     port: env.DATABASE_PORT,
-    dialect: "mysql",
+    dialect: 'mysql',
     pool: {
       max: 10,
       min: 0,
       acquire: 30000,
-      idle: 10000
-    }
+      idle: 10000,
+    },
   },
   test: {
-    username: "root",
+    username: 'root',
     password: null,
-    database: "databaseTest",
-    host: "127.0.0.1",
-    dialect: "mysql"
+    database: 'databaseTest',
+    host: '127.0.0.1',
+    dialect: 'mysql',
   },
   production: {
-    username: "root",
+    username: 'root',
     password: null,
-    database: "databaseProduction",
-    host: "127.0.0.1",
-    dialect: "mysql"
-  }
+    database: 'databaseProduction',
+    host: '127.0.0.1',
+    dialect: 'mysql',
+  },
 }

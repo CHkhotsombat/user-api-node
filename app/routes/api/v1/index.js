@@ -8,6 +8,6 @@ export const router = express.Router()
 router.use('/users', usersRouter)
 
 // Method not allowed
-router.all(['/users'], (req, res, next) => {  
+router.all(['/users'], (req, res, next) => {
   next(errorMethodNotAllowed())
 })

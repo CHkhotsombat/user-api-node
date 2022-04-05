@@ -1,12 +1,11 @@
-
 import express from 'express'
 import * as userService from '../../../services/user.service'
-import { 
-  pagination, 
-  responseWithPaging, 
-  errorNotFound, 
+import {
+  pagination,
+  responseWithPaging,
+  errorNotFound,
   errorValidateFailed,
-  internalServerError
+  internalServerError,
 } from '../../../utils/apiHelpers'
 
 import { validateCreateUser } from './schema/user.schema'
@@ -21,18 +20,16 @@ router.get('/', getUserList)
 router.post('/', createUser)
 
 // Route User id
-router.route('/:id')
-  .get(findById)
-  .delete(deleteUser)
+router.route('/:id').get(findById).delete(deleteUser)
 
-export async function getUserList (req, res, next) {
+export async function getUserList(req, res, next) {
   try {
     const { page, pageSize } = req.query
     const { limit, offset } = pagination(page, pageSize)
-    
+
     const results = await userService.getUserList({
       limit,
-      offset
+      offset,
     })
 
     res.status(200).json(responseWithPaging({ results, page, pageSize }))
@@ -41,7 +38,7 @@ export async function getUserList (req, res, next) {
   }
 }
 
-export async function createUser (req, res, next) {
+export async function createUser(req, res, next) {
   try {
     const errors = validateCreateUser(req.body)
 
@@ -52,15 +49,17 @@ export async function createUser (req, res, next) {
     // validate uniq email
     const user = await userService.findByEmail(req.body.email)
     if (user) {
-      return next(errorValidateFailed({ 
-        message: `user email : ${req.body.email} is already exists.`
-      }))
+      return next(
+        errorValidateFailed({
+          message: `user email : ${req.body.email} is already exists.`,
+        })
+      )
     }
 
     await userService.createUser(req.body)
     res.status(201).json({
       code: 'success',
-      data: null
+      data: null,
     })
   } catch (error) {
     console.error('Create User error', error)
@@ -68,7 +67,7 @@ export async function createUser (req, res, next) {
   }
 }
 
-export async function findById (req, res, next) {
+export async function findById(req, res, next) {
   try {
     const user = await userService.findById(req.params.id)
 
@@ -76,14 +75,14 @@ export async function findById (req, res, next) {
 
     res.status(200).json({
       code: 'success',
-      data: userEntity.userDetail(user)
+      data: userEntity.userDetail(user),
     })
   } catch (error) {
     next(error)
   }
 }
 
-export async function deleteUser (req, res, next) {
+export async function deleteUser(req, res, next) {
   try {
     await userService.findById(req.params.id)
     const _user = await userService.deleteUser(req.params.id)

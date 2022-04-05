@@ -1,55 +1,55 @@
 export const htmlStatus = (status = '') => {
   const allStatus = {
-    '200': {
+    200: {
       status: 200,
       code: 'success',
-      message: 'Success'
+      message: 'Success',
     },
-    '201': {
+    201: {
       status: 201,
       code: 'success',
-      message: 'Create Success.'
+      message: 'Create Success.',
     },
-    '204': {
+    204: {
       status: 204,
       code: 'success',
-      message: 'Success, No content.'
+      message: 'Success, No content.',
     },
-    '400': {
+    400: {
       status: 400,
       code: 'badRequest',
-      message: 'Bad Request.'
+      message: 'Bad Request.',
     },
-    '401': {
+    401: {
       status: 401,
       code: 'unauthorized',
-      message: 'Unauthorized.'
+      message: 'Unauthorized.',
     },
-    '403': {
+    403: {
       status: 403,
       code: 'forbidden',
-      message: 'Access Denied.'    
+      message: 'Access Denied.',
     },
-    '404': {
+    404: {
       status: 404,
       code: 'notFound',
-      message: 'Not found.'
+      message: 'Not found.',
     },
-    '405': {
+    405: {
       status: 405,
       code: 'methodNotAllowed',
-      message: 'HTTP Method Not Allowed.'
-    },  
-    '422': {
+      message: 'HTTP Method Not Allowed.',
+    },
+    422: {
       status: 422,
       code: 'validateFailed',
-      message: 'Validate Failed.'
+      message: 'Validate Failed.',
     },
-    '500': {
+    500: {
       status: 500,
       code: 'serverError',
-      message: 'Internal Server Error.'
-    }
+      message: 'Internal Server Error.',
+    },
   }
 
   if (!status) return allStatus

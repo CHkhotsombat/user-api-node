@@ -1,6 +1,6 @@
 import boom from '@hapi/boom'
 import models from '../models'
-const User = models.User;
+const User = models.User
 
 export const getUserList = async (params) => {
   let { offset, limit } = params
@@ -16,9 +16,9 @@ export const getUserList = async (params) => {
       'email',
       'status',
       'createdAt',
-      'updatedAt'
-    ]
-  });
+      'updatedAt',
+    ],
+  })
 
   return users
 }
@@ -26,7 +26,7 @@ export const getUserList = async (params) => {
 export const findById = async (id, opts = {}) => {
   const { exceptNotFound = false } = opts
   const user = await User.findByPk(id)
-  
+
   if (!exceptNotFound && !user) throw boom.notFound('User not found.')
 
   return user
@@ -34,23 +34,23 @@ export const findById = async (id, opts = {}) => {
 
 export const findByEmail = async (email) => {
   const user = await User.findOne({
-    where: { 
-      email: email 
-    }
+    where: {
+      email: email,
+    },
   })
 
   return user
 }
 
 export const createUser = async (params) => {
-  return await User.create(params);
+  return await User.create(params)
 }
 
 export const deleteUser = async (id) => {
   const user = await User.destroy({
     where: {
-      id: id
-    }
+      id: id,
+    },
   })
 
   return user
