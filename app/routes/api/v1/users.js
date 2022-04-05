@@ -3,7 +3,6 @@ import * as userService from '../../../services/user.service'
 import {
   pagination,
   responseWithPaging,
-  errorNotFound,
   errorValidateFailed,
   internalServerError,
 } from '../../../utils/apiHelpers'
@@ -85,7 +84,7 @@ export async function findById(req, res, next) {
 export async function deleteUser(req, res, next) {
   try {
     await userService.findById(req.params.id)
-    const _user = await userService.deleteUser(req.params.id)
+    await userService.deleteUser(req.params.id)
 
     res.sendStatus(204)
   } catch (error) {
