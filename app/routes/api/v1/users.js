@@ -70,8 +70,6 @@ export async function findById(req, res, next) {
   try {
     const user = await userService.findById(req.params.id)
 
-    // if (!user) return next(errorNotFound({ message: "User not found" }))
-
     res.status(200).json({
       code: 'success',
       data: userEntity.userDetail(user),
