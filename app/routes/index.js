@@ -1,5 +1,5 @@
 import express from 'express'
-import { router as apiV1 } from './api/v1'
+import { router as apiV1 } from './api/backend/v1'
 
 export const router = express.Router()
 

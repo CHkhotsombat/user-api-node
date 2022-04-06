@@ -1,11 +1,11 @@
 import express from 'express'
-import * as userService from '../../../services/user.service'
+import * as userService from '../../../../services/user.service'
 import {
   pagination,
   responseWithPaging,
   errorValidateFailed,
   internalServerError,
-} from '../../../utils/apiHelpers'
+} from '../../../../utils/apiHelpers'
 
 import { validateCreateUser } from './schema/user.schema'
 import * as userEntity from './entities/user.entity'
