@@ -9,7 +9,15 @@ export const getUserList = async (params) => {
     limit,
     offset,
     where: {},
-    attributes: ['id', 'firstName', 'lastName', 'email', 'status', 'createdAt', 'updatedAt'],
+    attributes: [
+      'id',
+      'firstName',
+      'lastName',
+      'email',
+      'status',
+      'createdAt',
+      'updatedAt',
+    ],
   })
 
   return users

@@ -59,7 +59,9 @@ export const errorValidateFailed = (opts = {}) => {
     return {
       status: status,
       message: message,
-      errors: _.map(errors, (obj) => obj.message?.toString().replaceAll('"', '')),
+      errors: _.map(errors, (obj) =>
+        obj.message?.toString().replaceAll('"', '')
+      ),
     }
   }
 

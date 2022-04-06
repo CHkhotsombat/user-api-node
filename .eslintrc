@@ -4,8 +4,8 @@
     "node": true,
     "es2021": true
   },
-  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
-  "plugins": ["prettier", "unused-imports"],
+  "extends": ["eslint:recommended"],
+  "plugins": ["unused-imports"],
   "parserOptions": {
     "ecmaVersion": 12,
     "sourceType": "module"
@@ -18,7 +18,15 @@
 			{ "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
 		],
     "max-len": ["error", { "code": 100, "ignoreUrls": true, "ignoreComments": true }],
+    "indent": ["error", 2],
+    "quotes": ["error", "single", { "avoidEscape": true }],
     "semi": ["error", "never"],
-    "indent": ["error", 2]
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "never"
+    }]
   }
 }
