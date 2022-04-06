@@ -15,7 +15,9 @@ Tutorials about user api
 - using docker-compose
   - docker-compose exec app sh
 - Create the new model
-  - npx sequelize-cli model:generate --name ${model-name}
+  - npx sequelize-cli model:generate --name ${model-name} --attributes ${column-name}:${type}
+  - # example
+    - npx sequelize-cli model:generate --name Admin --attributes firstName:string,lastName:string
 - Run migration
   - npx sequelize-cli db:migrate
 - Rollback migration
