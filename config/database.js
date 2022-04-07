@@ -8,6 +8,12 @@ module.exports = {
     host: env.DATABASE_HOST,
     port: env.DATABASE_PORT,
     dialect: 'mysql',
+    define: {
+      freezeTableName: true,
+      timestamps: true,
+      charset: 'utf8',
+      collate: 'utf8_general_ci',
+    },
     pool: {
       max: 10,
       min: 0,
