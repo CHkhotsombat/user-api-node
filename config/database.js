@@ -8,6 +8,8 @@ module.exports = {
     host: env.DATABASE_HOST,
     port: env.DATABASE_PORT,
     dialect: 'mysql',
+    logging: true,
+    migrationStorageTableName: 'migrations',
     define: {
       freezeTableName: true,
       timestamps: true,

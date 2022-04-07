@@ -9,10 +9,10 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        firstName: {
+        first_name: {
           type: Sequelize.STRING,
         },
-        lastName: {
+        last_name: {
           type: Sequelize.STRING,
         },
         email: {
@@ -27,27 +27,27 @@ module.exports = {
           type: Sequelize.STRING,
           defaultValue: 'UN_CONFIRM_EMAIL',
         },
-        emailConfirmationToken: {
+        email_confirmation_token: {
           type: Sequelize.STRING,
         },
-        emailConfirmedAt: {
+        email_confirmed_at: {
           type: Sequelize.DATE,
         },
-        deletedAt: {
+        deleted_at: {
           type: Sequelize.DATE,
         },
-        createdAt: {
+        created_at: {
           allowNull: false,
           type: Sequelize.DATE,
         },
-        updatedAt: {
+        updated_at: {
           allowNull: false,
           type: Sequelize.DATE,
         },
       })
       .then(() =>
-        queryInterface.addIndex('users', ['email', 'deletedAt'], {
-          name: 'idxUsersEmailDeletedAt',
+        queryInterface.addIndex('users', ['email', 'deleted_at'], {
+          name: 'idx_users_email_deleted_at',
           unique: true,
         })
       )

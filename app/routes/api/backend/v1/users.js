@@ -62,7 +62,12 @@ export async function createUser(req, res, next) {
     })
   } catch (error) {
     console.error('Create User error', error)
-    next(internalServerError(error))
+
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      next(errorValidateFailed({errors: error.errors}))
+    } else {
+      next(internalServerError(error))
+    }
   }
 }
 

@@ -5,13 +5,26 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
     {
-      firstName: DataTypes.STRING,
-      lastName: DataTypes.STRING,
+      firstName: {
+        type: DataTypes.STRING,
+        field: 'first_name',
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        field: 'last_name',
+      },
       email: {
         type: DataTypes.STRING,
+        field: 'email',
         allowNull: false,
-        unique: {
-          msg: 'Email is already to used.',
+        unique: true,
+        validate: {
+          notEmpty: {
+            msg: 'Please enter an email',
+          },
+          isEmail: {
+            msg: 'Please enter a valid email address.',
+          },
         },
       },
       password: {
@@ -23,25 +36,40 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM('IN_ACTIVE', 'ACTIVE', 'UN_CONFIRM_EMAIL'),
         defaultValue: 'UN_CONFIRM_EMAIL',
       },
-      emailConfirmedAt: DataTypes.DATE,
-      emailConfirmationToken: DataTypes.STRING,
-      deletedAt: DataTypes.DATE,
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE,
+      emailConfirmedAt: {
+        type: DataTypes.STRING,
+        field: 'email_confirmed_at',
+      },
+      emailConfirmationToken: {
+        type: DataTypes.STRING,
+        field: 'email_confirmation_token',
+      },
+      deletedAt: {
+        type: DataTypes.DATE,
+        field: 'deleted_at',
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        field: 'created_at',
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        field: 'updated_at',
+      },
     },
     {
       sequelize,
       modelName: 'User',
       tableName: 'users',
       paranoid: true,
-      timestamp: true,
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
+      deletedAt: 'deleted_at',
       indexes: [
         {
-          unique: {
-            msg: 'Email is already to used.',
-          },
-          fields: ['email', 'deletedAt'],
-          name: 'idxUsersEmailDeletedAt',
+          unique: true,
+          fields: ['email', 'deleted_at'],
+          name: 'idx_users_email_deleted_at',
         },
       ],
       hooks: {
