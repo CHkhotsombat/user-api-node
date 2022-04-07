@@ -8,10 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      firstName: {
+      first_name: {
         type: Sequelize.STRING,
       },
-      lastName: {
+      last_name: {
         type: Sequelize.STRING,
       },
       email: {
@@ -22,24 +22,30 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
     }).then(() =>
-      queryInterface.addIndex('admins', ['email', 'deletedAt'], {
-        name: 'idxAdminsEmailDeletedAt',
+      queryInterface.addIndex('admins', ['email', 'deleted_at'], {
+        name: 'idx_admins_email_deleted_at',
+      })
+    ).then(() => 
+      queryInterface.addConstraint('admins', {
+        fields: ['email', 'deleted_at'],
+        type: 'unique',
+        name: 'uniq_email_delete_at_constraint',
       })
     )
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Admins')
+    await queryInterface.dropTable('admins')
   },
 }

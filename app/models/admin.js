@@ -14,8 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Admin.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+    firstName: {
+      type: DataTypes.STRING,
+      field: 'first_name',
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      field: 'last_name',
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -24,19 +30,31 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-    deletedAt: DataTypes.DATE,
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at',
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at',
+    },
+    deletedAt: {
+      type: DataTypes.DATE,
+      field: 'deleted_at',
+    },
   }, {
     sequelize,
     modelName: 'Admin',
     tableName: 'admins',
     paranoid: true,
     timestamp: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    deletedAt: 'deleted_at',
     indexes: [
       {
-        fields: ['email', 'deletedAt'],
-        name: 'idxUsersEmailDeletedAt',
+        fields: ['email', 'deleted_at'],
+        name: 'idx_admins_email_deleted_at',
       },
     ],
     hooks: {
