@@ -18,17 +18,27 @@ export const paging = (totalCount, page, pageSize) => {
   }
 }
 
-export const responseWithPaging = (data) => {
-  const { count, rows } = data.results
-  const { page, pageSize } = data
+export const responseSuccess = ({ res, status = 200, data = null }) => {
+  const htmlInfo = htmlStatus(status)
 
-  return {
-    code: 'success',
+  res.status(status).json({
+    code: htmlInfo.code,
+    data: data,
+  })
+}
+
+export const responseWithPaging = (res, data) => {
+  const { page, pageSize, results } = data
+  const { count, rows } = results
+  const htmlInfo = htmlStatus(200)
+
+  res.status(htmlInfo.status).json({
+    code: htmlInfo.code,
     data: {
       results: rows,
       paging: paging(count, page, pageSize),
     },
-  }
+  })
 }
 
 export const errorNotFound = (opts = {}) => {
