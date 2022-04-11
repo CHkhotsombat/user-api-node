@@ -8,7 +8,7 @@ import {
   responseSuccess,
 } from '../../../../utils/apiHelpers'
 
-import { validateCreateUser, validateUpdateUser } from './schema/user.schema'
+import { validateCreateUserSchema, validateUpdateUserSchema } from './schema/user.schema'
 import * as userEntity from './entities/user.entity'
 
 export const router = express.Router()
@@ -36,7 +36,7 @@ export async function getUserList(req, res, next) {
 
 export async function createUser(req, res, next) {
   try {
-    const errors = validateCreateUser(req.body)
+    const errors = validateCreateUserSchema(req.body)
 
     if (errors) {
       return next(errorValidateFailed({ errors: errors.details }))
@@ -80,7 +80,7 @@ export async function updateUser(req, res, next) {
   try {
     const user = await userService.findById(req.params.id)
     
-    const errors = validateUpdateUser(req.body)
+    const errors = validateUpdateUserSchema(req.body)
 
     if (errors) {
       return next(errorValidateFailed({ errors: errors.details }))
