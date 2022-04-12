@@ -1,5 +1,5 @@
 import express from 'express'
-import { router as apiV1 } from './api/backend/v1'
+import { router as apiBackendV1 } from './api/backend/v1'
 
 export const router = express.Router()
 
@@ -13,4 +13,4 @@ router.get('/', function (req, res) {
   })
 })
 
-router.use('/api/v1', apiV1)
+router.use('/api/backend/v1', apiBackendV1)
