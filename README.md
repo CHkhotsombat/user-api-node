@@ -18,7 +18,15 @@ Tutorials about user api
   - npx sequelize-cli model:generate --name ${model-name} --attributes ${column-name}:${type}
   - # example
     - npx sequelize-cli model:generate --name Admin --attributes firstName:string,lastName:string
+- Add common migration file
+  - npx sequlize-cli migration:create --name add-column-to-admins
+  - OR
+  - node node_modules/.bin/sequelize migration:create --name ${migration-name} 
 - Run migration
   - npx sequelize-cli db:migrate
+  - OR
+  - node node_modules/.bin/sequelize db:migrate
 - Rollback migration
   - npx sequelize-cli db:migrate:undo
+  - OR
+  - node node_modules/.bin/sequelize db:migrate:undo
