@@ -6,7 +6,9 @@
     "start": "node ./bin/www",
     "dev": "nodemon --exec babel-node -- ./bin/www",
     "lint:check": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "migrate:up": "node node_modules/.bin/sequelize db:migrate",
+    "migrate:down": "node node_modules/.bin/sequelize db:migrate:undo"
   },
   "dependencies": {
     "@hapi/boom": "^9.1.4",
