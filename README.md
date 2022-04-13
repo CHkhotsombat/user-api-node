@@ -30,3 +30,7 @@ Tutorials about user api
   - npx sequelize-cli db:migrate:undo
   - OR
   - node node_modules/.bin/sequelize db:migrate:undo
+- Run seed
+  - node node_modules/.bin/sequelize db:seed:all
+- Run undo seed
+  - node node_modules/.bin/sequelize db:seed:undo:all
