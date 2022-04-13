@@ -15,12 +15,22 @@ module.exports = (sequelize, DataTypes) => {
   }
   Role.init({
     code: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('admin', 'user_admin'),
       allowNull: false,
+      unique: true,
     },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('Admin', 'User admin'),
       allowNull: false,
+      unique: true,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at',
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at',
     },
     deletedAt: {
       type: DataTypes.DATE,
