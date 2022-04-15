@@ -79,7 +79,7 @@ export async function findById(req, res, next) {
 export async function updateUser(req, res, next) {
   try {
     const user = await userService.findById(req.params.id)
-    
+
     const errors = validateUpdateUserSchema(req.body)
 
     if (errors) {

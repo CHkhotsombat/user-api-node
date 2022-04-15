@@ -46,6 +46,6 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: 'updated_at',
     deletedAt: 'deleted_at',
   })
-  
+
   return Role
 }

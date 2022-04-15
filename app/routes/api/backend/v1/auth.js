@@ -36,7 +36,7 @@ export async function register(req, res, next) {
     const admin = await AdminService.createAdmin(
       {
         ...req.body,
-      }, 
+      },
       { tx }
     )
     await AdminRoleService.createAdminRole([

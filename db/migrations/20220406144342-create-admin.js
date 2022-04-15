@@ -37,7 +37,7 @@ module.exports = {
       queryInterface.addIndex('admins', ['email', 'deleted_at'], {
         name: 'idx_admins_email_deleted_at',
       })
-    ).then(() => 
+    ).then(() =>
       queryInterface.addConstraint('admins', {
         fields: ['email', 'deleted_at'],
         type: 'unique',

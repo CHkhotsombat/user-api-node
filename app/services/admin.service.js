@@ -22,14 +22,14 @@ export const getAdminList = async (params = {}) => {
   return admins
 }
 export const createAdmin = async (body, { tx }) => {
-  return await Admin.create(body, { 
+  return await Admin.create(body, {
     transaction: tx,
   })
 }
 
 export const findById = async (id, opts = {}) => {
   const { tx, exceptNotFound = false } = opts
-  const admin = await Admin.findByPk(id, { 
+  const admin = await Admin.findByPk(id, {
     transaction: tx,
     include: [
       {

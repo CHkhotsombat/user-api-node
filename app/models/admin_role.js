@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         foreignKey: 'admin_id',
       })
-      this.belongsTo(models.Role, { 
+      this.belongsTo(models.Role, {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         foreignKey: 'role_id',

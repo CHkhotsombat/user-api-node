@@ -3,7 +3,7 @@ export const adminDetail = (admin) => {
     id,
     firstName,
     lastName,
-    email,    
+    email,
     createdAt,
     updatedAt,
     roles,
