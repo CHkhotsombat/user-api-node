@@ -8,9 +8,9 @@ module.exports = {
         role_id INT(11) UNSIGNED NOT NULL,
         created_at DATETIME NOT NULL,
         updated_at DATETIME NOT NULL,
-        deleted_at DATETIME,
         FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE ON UPDATE CASCADE,
-        FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE ON UPDATE CASCADE
+        FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE ON UPDATE CASCADE,
+        UNIQUE KEY idx_admin_id_role_id (admin_id, role_id)
       );
     `)
   },
