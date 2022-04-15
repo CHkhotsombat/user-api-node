@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasMany(models.AdminRole, { as: 'adminRoles' })
     }
   }
   Role.init({
@@ -41,7 +42,6 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Role',
     tableName: 'roles',
     paranoid: true,
-    timestamp: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
     deletedAt: 'deleted_at',

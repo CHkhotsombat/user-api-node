@@ -1,5 +1,6 @@
+import boom from '@hapi/boom'
 import models from '../models'
-const Admin = models.Admin
+const { Admin, Role } = models
 
 export const getAdminList = async (params = {}) => {
   let { offset, limit } = params
@@ -20,6 +21,32 @@ export const getAdminList = async (params = {}) => {
 
   return admins
 }
-export const createAdmin = async (params) => {
-  return await Admin.create(params)  
+export const createAdmin = async (body, { tx }) => {
+  return await Admin.create(body, { 
+    transaction: tx,
+  })
+}
+
+export const findById = async (id, opts = {}) => {
+  const { tx, exceptNotFound = false } = opts
+  const admin = await Admin.findByPk(id, { 
+    transaction: tx,
+    include: [
+      {
+        model: Role,
+        as: 'roles',
+        attributes: [
+          'name',
+          'code',
+        ],
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+  })
+
+  if (!exceptNotFound && !admin) throw boom.notFound('Admin not found.')
+
+  return admin
 }

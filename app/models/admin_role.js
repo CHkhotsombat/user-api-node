@@ -42,18 +42,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       field: 'updated_at',
     },
-    deletedAt: {
-      type: DataTypes.DATE,
-      field: 'deleted_at',
-    },
   }, {
     sequelize,
     modelName: 'AdminRole',
     tableName: 'admin_roles',
-    timestamp: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
-    deletedAt: 'deleted_at',
+    indexes: [
+      {
+        unique: true,
+        fields: ['adminId', 'roleId'],
+      },
+    ],
   })
 
   return AdminRole

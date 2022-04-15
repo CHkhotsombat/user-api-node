@@ -1,5 +1,8 @@
 import express from 'express'
-import * as adminService from '../../../../services/admin.service'
+import { sequelize } from '../../../../models'
+import * as AdminService from '../../../../services/admin.service'
+import * as RoleService from '../../../../services/role.service'
+import * as AdminRoleService from '../../../../services/admin_role.service'
 import {
   errorValidateFailed,
   internalServerError,
@@ -12,8 +15,9 @@ export const router = express.Router()
 router.post('/register', register)
 
 export async function register(req, res, next) {
+  const tx = await sequelize.transaction()
   try {
-    const { count } = await adminService.getAdminList()
+    const { count } = await AdminService.getAdminList()
 
     if (count > 0) {
       return next(errorValidateFailed({
@@ -28,10 +32,29 @@ export async function register(req, res, next) {
       return next(errorValidateFailed({ errors: errors.details }))
     }
 
-    await adminService.createAdmin(req.body)
+    const role = await RoleService.findByCode('admin', { tx })
+    const admin = await AdminService.createAdmin(
+      {
+        ...req.body,
+      }, 
+      { tx }
+    )
+    await AdminRoleService.createAdminRole([
+      {
+        admin_id: admin.id,
+        role_id: role.id,
+      },
+    ], {
+      tx,
+    })
+
+    console.log('admin roles', admin.adminRoles)
+
+    await tx.commit()
 
     responseSuccess({ res, status: 201 })
   } catch (error) {
+    await tx.rollback()
     next(internalServerError(error))
   }
 }
