@@ -50,3 +50,22 @@ export const findById = async (id, opts = {}) => {
 
   return admin
 }
+
+export const findByEmail = async (email, opts = {}) => {
+  const { tx, exceptNotFound = false } = opts
+
+  const admin = await Admin.findOne(
+    {
+      where: {
+        email: email,
+      },
+    },
+    {
+      transaction: tx,
+    }
+  )
+
+  if (!exceptNotFound && !admin) throw boom.notFound('Admin not found.')
+
+  return admin
+}
