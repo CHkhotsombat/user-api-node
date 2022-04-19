@@ -69,3 +69,18 @@ export const findByEmail = async (email, opts = {}) => {
 
   return admin
 }
+
+export const UpdateAdminToken = async (admin, token, opts = {}) => {
+  const { tx } = opts
+
+  await admin.update(
+    {
+      token,
+    },
+    {
+      transaction: tx,
+    }
+  )
+
+  return admin
+}

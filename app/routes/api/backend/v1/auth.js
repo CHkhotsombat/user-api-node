@@ -1,4 +1,6 @@
 import express from 'express'
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 import { sequelize } from '../../../../models'
 import * as AdminService from '../../../../services/admin.service'
 import * as RoleService from '../../../../services/role.service'
@@ -7,12 +9,15 @@ import {
   errorValidateFailed,
   internalServerError,
   responseSuccess,
+  errorUnauthorize,
 } from '../../../../utils/apiHelpers'
 import { createAdminSchema } from './schema/admin.schema'
+import * as adminEntity from './entities/admin.entity'
 
 export const router = express.Router()
 
 router.post('/register', register)
+router.post('/login', login)
 
 export async function register(req, res, next) {
   const tx = await sequelize.transaction()
@@ -55,6 +60,41 @@ export async function register(req, res, next) {
     responseSuccess({ res, status: 201 })
   } catch (error) {
     await tx.rollback()
+    next(internalServerError(error))
+  }
+}
+
+export async function login(req, res, next) {
+  const tx = await sequelize.transaction()
+
+  try {
+    const { email, password } = req.body
+
+    let admin = await AdminService.findByEmail(email)
+    const match = await bcrypt.compare(password, admin.password)
+
+    if (match) {
+      // const token = jwt.sign(email, process.env.TOKEN_SECRET, { expiresIn: '1d' })
+      const token = jwt.sign(
+        { email },
+        process.env.TOKEN_SECRET,
+        { expiresIn: '1d' }
+      )
+      admin = await AdminService.UpdateAdminToken(admin, token, { tx })
+      tx.commit()
+
+      responseSuccess({
+        res,
+        status: 201,
+        data: {
+          token: token, admin: adminEntity.adminDetail(admin),
+        },
+      })
+    } else {
+      return next(errorUnauthorize())
+    }
+  } catch (error) {
+    tx.rollback()
     next(internalServerError(error))
   }
 }

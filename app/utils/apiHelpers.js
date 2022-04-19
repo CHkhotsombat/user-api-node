@@ -61,6 +61,16 @@ export const errorMethodNotAllowed = (opts = {}) => {
   }
 }
 
+export const errorUnauthorize = (opts = {}) => {
+  const htmlInfo = htmlStatus(401)
+  const { message = htmlInfo.message } = opts
+
+  return {
+    status: htmlInfo.status,
+    message: message,
+  }
+}
+
 export const errorValidateFailed = (opts = {}) => {
   const status = 422
   const { errors, message = htmlStatus(status).message } = opts
