@@ -65,8 +65,6 @@ export async function register(req, res, next) {
 }
 
 export async function login(req, res, next) {
-  const tx = await sequelize.transaction()
-
   try {
     const { email, password } = req.body
 
@@ -80,8 +78,6 @@ export async function login(req, res, next) {
         process.env.TOKEN_SECRET,
         { expiresIn: '1d' }
       )
-      admin = await AdminService.UpdateAdminToken(admin, token, { tx })
-      tx.commit()
 
       responseSuccess({
         res,
@@ -94,7 +90,6 @@ export async function login(req, res, next) {
       return next(errorUnauthorize())
     }
   } catch (error) {
-    tx.rollback()
     next(internalServerError(error))
   }
 }
