@@ -29,7 +29,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    token: DataTypes.STRING,
     createdAt: {
       type: DataTypes.DATE,
       field: 'created_at',
