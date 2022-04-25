@@ -16,8 +16,12 @@ Tutorials about user api
   - docker-compose exec app sh
 - Create the new model
   - npx sequelize-cli model:generate --name ${model-name} --attributes ${column-name}:${type}
+  - OR
+  - node node_modules/.bin/sequelize model:generate --name ${model-name} --attributes ${column-name}:${type}
   - # example
     - npx sequelize-cli model:generate --name Admin --attributes firstName:string,lastName:string
+    - OR
+    - node node_modules/.bin/sequelize model:generate --name Admin --attributes firstName:string,lastName:string
 - Add common migration file
   - npx sequlize-cli migration:create --name add-column-to-admins
   - OR
