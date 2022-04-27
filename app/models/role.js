@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasMany(models.AdminRole, { as: 'adminRoles' })
+      this.hasMany(models.RoleAbility, { as: 'roleAbilities' })
+      this.belongsToMany(models.Ability, {
+        as: 'abilities',
+        through: 'role_abilities',
+      })
     }
   }
   Role.init({

@@ -11,22 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasMany(models.RoleAbility, { as: 'roleAbilities' })
     }
   }
   Ability.init({
     name: {
       type: DataTypes.STRING,
-      unique: {
-        agrs: true,
-        msg: 'Name must be unique',
-      },
     },
     code: {
       type: DataTypes.STRING,
-      unique: {
-        agrs: true,
-        msg: 'Name must be unique',
-      },
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -44,9 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: 'updated_at',
     indexes: [
       {
-        unique: {
-          msg: 'Name must be unique',
-        },
+        unique: true,
         fields: 'name',
         name: 'idx_ability_name',
       },
