@@ -53,7 +53,7 @@ export async function getOptions(req, res, next) {
 export async function createRole(req, res, next) {
   const tx = await sequelize.transaction()
   try {
-    const result = await RoleService.createRole(req.body, { tx })
+    await RoleService.createRole(req.body, { tx })
 
     await tx.commit()
 

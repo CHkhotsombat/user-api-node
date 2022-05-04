@@ -2,7 +2,7 @@ import models from '../models'
 import boom from '@hapi/boom'
 import _ from 'lodash'
 import * as RoleAbilityService from './role_ability.service'
-const { Role, Ability, RoleAbility } = models
+const { Role, Ability } = models
 
 export const findByCode = async (code, { tx }) => {
   return await Role.findOne({
