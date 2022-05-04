@@ -72,11 +72,10 @@ export async function login(req, res, next) {
     const match = await bcrypt.compare(password, admin.password)
 
     if (match) {
-      // const token = jwt.sign(email, process.env.TOKEN_SECRET, { expiresIn: '1d' })
       const token = jwt.sign(
         { email },
         process.env.TOKEN_SECRET,
-        { expiresIn: '1d' }
+        { expiresIn: '10d' }
       )
 
       responseSuccess({
