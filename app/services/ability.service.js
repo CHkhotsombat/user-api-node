@@ -25,6 +25,18 @@ export const getAbilityList = async (params = {}) => {
   return abilities
 }
 
+export const getAbilityOptions = async () => {
+  const abilities = await Ability.findAll({
+    order: ['id'],
+    attributes: [
+      ['id', 'value'],
+      ['name', 'label'],
+    ],
+  })
+
+  return abilities
+}
+
 export const findById = async (id, opts = {}) => {
   const { tx, exceptNotFound = false } = opts
   const ability = await Ability.findByPk(id, {
@@ -51,8 +63,6 @@ export const findOne = async (query, opts = {}) => {
 }
 
 export const updateAbility = async (ability, body, { tx }) => {
-  console.log('ability--', ability)
-
   await ability.update({
     ...body,
   }, {

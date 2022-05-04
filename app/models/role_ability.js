@@ -54,6 +54,13 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'role_abilities',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
+    indexes: [
+      {
+        unique: true,
+        fields: ['role_id', 'ability_id'],
+        name: 'idx_role_id_ability_id',
+      },
+    ],
   })
   return RoleAbility
 }
