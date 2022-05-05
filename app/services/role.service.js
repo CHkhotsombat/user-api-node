@@ -33,6 +33,18 @@ export const getRoleList = async (params = {}) => {
   return roles
 }
 
+export const getRoleOptions = async() => {
+  const roles = await Role.findAll({
+    order: ['id'],
+    attributes: [
+      ['id', 'value'],
+      ['name', 'label'],
+    ],
+  })
+
+  return roles
+}
+
 export const createRole = async (body, opts = {}) => {
   const { tx } = opts
   const { name, code, ability_ids } = body
