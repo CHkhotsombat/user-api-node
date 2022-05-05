@@ -1,4 +1,7 @@
-export const adminDetail = (admin) => {
+import _ from 'lodash'
+import * as AdminService from '../../../../../services/admin.service'
+
+export const adminDetail = async (admin) => {
   const {
     id,
     firstName,
@@ -9,6 +12,16 @@ export const adminDetail = (admin) => {
     roles,
   } = admin
 
+  const abilities = await AdminService.getAbilities(admin)
+
+  // custom roles
+  const custom_roles = _.map(roles, (role) => (
+    {
+      name: role.name,
+      code: role.code,
+    }
+  ))
+
   return {
     id,
     firstName,
@@ -16,6 +29,7 @@ export const adminDetail = (admin) => {
     email,
     createdAt,
     updatedAt,
-    roles,
+    abilities,
+    roles: custom_roles,
   }
 }

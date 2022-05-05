@@ -44,7 +44,7 @@ export async function register(req, res, next) {
       },
       { tx }
     )
-    await AdminRoleService.createAdminRole([
+    await AdminRoleService.createBulk([
       {
         admin_id: admin.id,
         role_id: role.id,

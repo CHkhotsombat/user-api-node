@@ -1,6 +1,7 @@
 import boom from '@hapi/boom'
+import _ from 'lodash'
 import models from '../models'
-const { Admin, Role } = models
+const { Admin, Role, Ability } = models
 
 export const getAdminList = async (params = {}) => {
   let { offset, limit } = params
@@ -36,12 +37,10 @@ export const findById = async (id, opts = {}) => {
         model: Role,
         as: 'roles',
         attributes: [
+          'id',
           'name',
           'code',
         ],
-        through: {
-          attributes: [],
-        },
       },
     ],
   })
@@ -66,6 +65,49 @@ export const findByEmail = async (email, opts = {}) => {
   )
 
   if (!exceptNotFound && !admin) throw boom.notFound('Admin not found.')
+
+  return admin
+}
+
+export const getAbilities = async (admin, opts = {}) => {
+  const { tx } = opts
+
+  const role_ids = _.map(admin.roles, (role) => ( role.id ))
+
+  const abilities = await Ability.findAll(
+    {
+      where: {},
+      attributes: [
+        'name',
+        'code',
+      ],
+      include: [
+        {
+          model: Role,
+          as: 'roles',
+          where: {
+            id: role_ids,
+          },
+          attributes: [],
+        },
+      ],
+    },
+    {
+      transaction: tx,
+    }
+  )
+
+  return abilities
+}
+
+export const updateAdmin = async (admin, body, opts = {}) => {
+  const { tx } = opts
+
+  await admin.update({
+    ...body,
+  }, {
+    transaction: tx,
+  })
 
   return admin
 }
