@@ -68,9 +68,7 @@ export async function updateAdmin(req, res, next) {
 
     // destroy old admin role
     await AdminRoleService.destroy({ tx, adminId: admin.id })
-    console.log('destroy admin role')
     await AdminService.updateAdmin(admin, { firstName, lastName }, { tx })
-    console.log('update admin')
 
     // create admin role
     const adminRoleBody = _.map(roleIds, (roleId) => ({

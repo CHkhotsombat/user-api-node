@@ -33,7 +33,6 @@ export async function register(req, res, next) {
     const errors = createAdminSchema(req.body)
 
     if (errors) {
-      console.log('error', errors)
       return next(errorValidateFailed({ errors: errors.details }))
     }
 
@@ -52,8 +51,6 @@ export async function register(req, res, next) {
     ], {
       tx,
     })
-
-    console.log('admin roles', admin.adminRoles)
 
     await tx.commit()
 
