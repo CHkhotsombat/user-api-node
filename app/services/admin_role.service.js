@@ -27,8 +27,8 @@ export const destroy = async (opts = {}) => {
   const result = await AdminRole.destroy(
     {
       where: cleanNullKeys({
-        role_id: roleId,
-        admin_id: adminId,
+        roleId,
+        adminId,
       }),
     },
     {

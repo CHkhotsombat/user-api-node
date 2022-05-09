@@ -7,8 +7,8 @@ export const createBulk = async (body, opts = {}) => {
   const result = await RoleAbility.bulkCreate(
     body,
     {
-      fields: ['role_id', 'ability_id'],
-      updateOnDuplicate: ['role_id', 'ability_id'],
+      fields: ['roleId', 'abilityId'],
+      updateOnDuplicate: ['roleId', 'abilityId'],
       transaction: tx,
     }
   )
@@ -17,13 +17,13 @@ export const createBulk = async (body, opts = {}) => {
 }
 
 export const destroy = async (opts = {}) => {
-  const { tx, role_id, ability_id } = opts
+  const { tx, roleId, abilityId } = opts
 
   const result = await RoleAbility.destroy(
     {
       where: cleanNullKeys({
-        role_id,
-        ability_id,
+        roleId,
+        abilityId,
       }),
     },
     {

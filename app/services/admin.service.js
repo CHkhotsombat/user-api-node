@@ -72,7 +72,7 @@ export const findByEmail = async (email, opts = {}) => {
 export const getAbilities = async (admin, opts = {}) => {
   const { tx } = opts
 
-  const role_ids = _.map(admin.roles, (role) => ( role.id ))
+  const roleIds = _.map(admin.roles, (role) => ( role.id ))
 
   const abilities = await Ability.findAll(
     {
@@ -86,7 +86,7 @@ export const getAbilities = async (admin, opts = {}) => {
           model: Role,
           as: 'roles',
           where: {
-            id: role_ids,
+            id: roleIds,
           },
           attributes: [],
         },

@@ -47,7 +47,7 @@ export const getRoleOptions = async() => {
 
 export const createRole = async (body, opts = {}) => {
   const { tx } = opts
-  const { name, code, ability_ids } = body
+  const { name, code, abilityIds } = body
 
   const role = await Role.create({
     name,
@@ -56,21 +56,20 @@ export const createRole = async (body, opts = {}) => {
     transaction: tx,
   })
 
-  if (ability_ids) {
+  if (abilityIds) {
     // destroy
-    await RoleAbilityService.destroy({ role_id: role.id, tx })
+    await RoleAbilityService.destroy({ roleId: role.id, tx })
 
     // create
-    const roleAbilities = _.map(ability_ids, (id) => {
+    const roleAbilities = _.map(abilityIds, (id) => {
       return {
-        role_id: role.id,
-        ability_id: id,
+        roleId: role.id,
+        abilityId: id,
       }
     })
 
     await RoleAbilityService.createBulk(roleAbilities, { tx })
   }
-
 
   return role
 }
@@ -102,17 +101,17 @@ export const findById = async (id, opts = {}) => {
 
 export const updateRole = async (role, body, opts = {}) => {
   const { tx } = opts
-  const { name, code, ability_ids } = body
+  const { name, code, abilityIds } = body
 
-  if (ability_ids) {
+  if (abilityIds) {
     // destroy
-    await RoleAbilityService.destroy({ role_id: role.id, tx })
+    await RoleAbilityService.destroy({ roleId: role.id, tx })
 
     // create
-    const roleAbilities = _.map(ability_ids, (id) => {
+    const roleAbilities = _.map(abilityIds, (id) => {
       return {
-        role_id: role.id,
-        ability_id: id,
+        roleId: role.id,
+        abilityId: id,
       }
     })
 
