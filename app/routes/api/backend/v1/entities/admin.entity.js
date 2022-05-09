@@ -15,7 +15,7 @@ export const adminDetail = async (admin) => {
   const abilities = await AdminService.getAbilities(admin)
 
   // custom roles
-  const custom_roles = _.map(roles, (role) => (
+  const customRoles = _.map(roles, (role) => (
     {
       name: role.name,
       code: role.code,
@@ -30,6 +30,6 @@ export const adminDetail = async (admin) => {
     createdAt,
     updatedAt,
     abilities,
-    roles: custom_roles,
+    roles: customRoles,
   }
 }

@@ -40,13 +40,13 @@ export async function createAbility(req, res, next) {
     if (errors) return next(errorValidateFailed({ errors: errors.details }))
 
     // error if exist
-    let exist_ability = await AbilityService.findOne({ name: req.body.name }, { tx })
-    if (exist_ability) {
+    let existAbility = await AbilityService.findOne({ name: req.body.name }, { tx })
+    if (existAbility) {
       return next(errorValidateFailed({ message: 'Name is already exists.' }))
     }
 
-    exist_ability = await AbilityService.findOne({ code: req.body.code }, { tx })
-    if (exist_ability) {
+    existAbility = await AbilityService.findOne({ code: req.body.code }, { tx })
+    if (existAbility) {
       return next(errorValidateFailed({ message: 'Code is already exists.' }))
     }
 
@@ -80,15 +80,15 @@ export async function updateAbility(req, res, next) {
     if (errors) return next(errorValidateFailed({ errors: errors.details }))
 
     // error if exist
-    let exist_ability = await AbilityService.findOne({ name: req.body.name }, { tx })
+    let existAbility = await AbilityService.findOne({ name: req.body.name }, { tx })
 
-    if (exist_ability && ability.id != exist_ability.id) {
+    if (existAbility && ability.id != existAbility.id) {
       return next(errorValidateFailed({ message: 'Name is already exists.' }))
     }
 
-    exist_ability = await AbilityService.findOne({ code: req.body.code }, { tx })
+    existAbility = await AbilityService.findOne({ code: req.body.code }, { tx })
 
-    if (exist_ability && ability.id != exist_ability.id) {
+    if (existAbility && ability.id != existAbility.id) {
       return next(errorValidateFailed({ message: 'Code is already exists.' }))
     }
 
