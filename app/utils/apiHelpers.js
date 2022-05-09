@@ -71,6 +71,16 @@ export const errorUnauthorize = (opts = {}) => {
   }
 }
 
+export const errorForbidden = (opts = {}) => {
+  const htmlInfo = htmlStatus(403)
+  const { message = htmlInfo.message } = opts
+
+  return {
+    status: htmlInfo.status,
+    message: message,
+  }
+}
+
 export const errorValidateFailed = (opts = {}) => {
   const status = 422
   const { errors, message = htmlStatus(status).message } = opts

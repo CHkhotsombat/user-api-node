@@ -58,6 +58,17 @@ export const findByEmail = async (email, opts = {}) => {
       where: {
         email: email,
       },
+      include: [
+        {
+          model: Role,
+          as: 'roles',
+          attributes: [
+            'id',
+            'name',
+            'code',
+          ],
+        },
+      ],
     },
     {
       transaction: tx,

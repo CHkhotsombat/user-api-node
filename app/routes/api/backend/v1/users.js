@@ -9,14 +9,15 @@ import {
 
 import { validateCreateUserSchema, validateUpdateUserSchema } from './schema/user.schema'
 import * as userEntity from './entities/user.entity'
+import { authorizeAdmin } from '../../../../middleware/authorize_admin'
 
 export const router = express.Router()
 
-router.get('/', getUserList)
-router.post('/', createUser)
-router.get('/:id/', findById)
-router.put('/:id/', updateUser)
-router.delete('/:id/', deleteUser)
+router.get('/', authorizeAdmin('readUser'), getUserList)
+router.post('/', authorizeAdmin('addUser'), createUser)
+router.get('/:id/', authorizeAdmin('readUser'), findById)
+router.put('/:id/', authorizeAdmin('updateUser'), updateUser)
+router.delete('/:id/', authorizeAdmin('deleteUser'), deleteUser)
 
 export async function getUserList(req, res, next) {
   try {
