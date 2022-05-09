@@ -7,7 +7,6 @@ import * as RoleService from '../../../../services/role.service'
 import * as AdminRoleService from '../../../../services/admin_role.service'
 import {
   errorValidateFailed,
-  internalServerError,
   responseSuccess,
   errorUnauthorize,
 } from '../../../../utils/apiHelpers'
@@ -57,7 +56,7 @@ export async function register(req, res, next) {
     responseSuccess({ res, status: 201 })
   } catch (error) {
     await tx.rollback()
-    next(internalServerError(error))
+    next(error)
   }
 }
 
@@ -86,6 +85,6 @@ export async function login(req, res, next) {
       return next(errorUnauthorize())
     }
   } catch (error) {
-    next(internalServerError(error))
+    next(error)
   }
 }

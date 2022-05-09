@@ -4,7 +4,6 @@ import {
   pagination,
   responseWithPaging,
   errorValidateFailed,
-  internalServerError,
   responseSuccess,
 } from '../../../../utils/apiHelpers'
 
@@ -30,7 +29,7 @@ export async function getUserList(req, res, next) {
     })
     responseWithPaging(res, { results, page, pageSize })
   } catch (error) {
-    next(internalServerError(error))
+    next(error)
   }
 }
 
@@ -61,7 +60,7 @@ export async function createUser(req, res, next) {
     if (error.name === 'SequelizeUniqueConstraintError') {
       next(errorValidateFailed({errors: error.errors}))
     } else {
-      next(internalServerError(error))
+      next(error)
     }
   }
 }
