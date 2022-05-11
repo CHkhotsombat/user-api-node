@@ -92,6 +92,7 @@ export const getAbilities = async (admin, opts = {}) => {
         'name',
         'code',
       ],
+      order: [['id', 'ASC']],
       include: [
         {
           model: Role,
