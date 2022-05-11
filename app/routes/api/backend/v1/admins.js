@@ -6,13 +6,14 @@ import * as AdminRoleService from '../../../../services/admin_role.service'
 import * as AdminEntity from './entities/admin.entity'
 import { sequelize } from '../../../../models'
 import _ from 'lodash'
+import { authorizeAdmin } from '../../../../middleware/authorize_admin'
 
 export const router = express.Router()
 
-router.get('/', getAdminList)
-router.get('/options', getOptions)
-router.get('/:id', findById)
-router.put('/:id', updateAdmin)
+router.get('/', authorizeAdmin('readAdmin'), getAdminList)
+router.get('/options', authorizeAdmin('readAdmin'), getOptions)
+router.get('/:id', authorizeAdmin('readAdmin'), findById)
+router.put('/:id', authorizeAdmin('updateAdmin'), updateAdmin)
 
 export async function getAdminList(req, res, next) {
   try {
