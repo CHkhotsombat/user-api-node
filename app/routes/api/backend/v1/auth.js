@@ -11,12 +11,14 @@ import {
   errorUnauthorize,
 } from '../../../../utils/apiHelpers'
 import { createAdminSchema } from './schema/admin.schema'
-import * as adminEntity from './entities/admin.entity'
+import * as AdminEntity from './entities/admin.entity'
+import { authenticateAdmin } from '../../../../middleware/authenticate_admin'
 
 export const router = express.Router()
 
 router.post('/register', register)
 router.post('/login', login)
+router.get('/info', authenticateAdmin, info)
 
 export async function register(req, res, next) {
   const tx = await sequelize.transaction()
@@ -78,12 +80,24 @@ export async function login(req, res, next) {
         res,
         status: 201,
         data: {
-          token: token, admin: adminEntity.adminDetail(admin),
+          token: token, admin: AdminEntity.adminDetail(admin),
         },
       })
     } else {
       return next(errorUnauthorize())
     }
+  } catch (error) {
+    next(error)
+  }
+}
+
+export async function info(req, res, next) {
+  try {
+    responseSuccess({
+      res,
+      status: 200,
+      data: await AdminEntity.adminDetail(req.current_admin),
+    })
   } catch (error) {
     next(error)
   }
