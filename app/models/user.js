@@ -44,6 +44,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         field: 'email_confirmation_token',
       },
+      avatarName: {
+        type: DataTypes.STRING,
+        field: 'avatar_name',
+      },
       deletedAt: {
         type: DataTypes.DATE,
         field: 'deleted_at',

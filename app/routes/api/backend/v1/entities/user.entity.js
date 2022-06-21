@@ -1,3 +1,5 @@
+import { userAvatarUrl } from '../../../../../utils/helpers'
+
 export const userDetail = (user) => {
   const {
     id,
@@ -6,9 +8,12 @@ export const userDetail = (user) => {
     email,
     status,
     emailConfirmedAt,
+    avatarName,
     createdAt,
     updatedAt,
   } = user
+
+  const avatarUrl = avatarName ? userAvatarUrl(avatarName) : null
 
   return {
     id,
@@ -17,6 +22,7 @@ export const userDetail = (user) => {
     email,
     status,
     emailConfirmedAt,
+    avatarUrl,
     createdAt,
     updatedAt,
   }

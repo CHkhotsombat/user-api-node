@@ -10,14 +10,25 @@ import {
 import { validateCreateUserSchema, validateUpdateUserSchema } from './schema/user.schema'
 import * as userEntity from './entities/user.entity'
 import { authorizeAdmin } from '../../../../middleware/authorize_admin'
+import { uploadFile } from '../../../../utils/uploadFile'
+import _ from 'lodash'
+import { sequelize } from '../../../../models'
+import { userAvatarPath } from '../../../../utils/helpers'
+import fs from 'fs'
+import path from 'path'
 
 export const router = express.Router()
+export const uploadAvatarImage = uploadFile({
+  path: '/users/avatars',
+  fieldName: 'avatar',
+})
 
 router.get('/', authorizeAdmin('readUser'), getUserList)
 router.post('/', authorizeAdmin('addUser'), createUser)
 router.get('/:id/', authorizeAdmin('readUser'), findById)
 router.put('/:id/', authorizeAdmin('updateUser'), updateUser)
 router.delete('/:id/', authorizeAdmin('deleteUser'), deleteUser)
+router.post('/:id/upload_avatar', authorizeAdmin('updateUser'), uploadAvatarImage, uploadAvatar)
 
 export async function getUserList(req, res, next) {
   try {
@@ -92,6 +103,26 @@ export async function updateUser(req, res, next) {
 
     responseSuccess({ res, status: 200, data: userEntity.userDetail(user) })
   } catch (error) {
+    next(error)
+  }
+}
+
+export async function uploadAvatar(req, res, next) {
+  const tx = await sequelize.transaction()
+
+  try {
+    const filename = _.get(req, 'file.filename')
+    const user = await userService.findById(req.params.id)
+    const avatarName = user.avatarName
+    const userResult = await userService.uploadAvatar(user, filename, { tx })
+    await tx.commit()
+
+    // Remove old avatar
+    if (!_.isEmpty(avatarName)) fs.unlinkSync(path.join(__basedir, userAvatarPath(avatarName)))
+
+    responseSuccess({ res, status: 200 })
+  } catch (error) {
+    await tx.rollback()
     next(error)
   }
 }

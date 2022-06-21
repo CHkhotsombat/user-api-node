@@ -55,3 +55,15 @@ export const deleteUser = async (id) => {
 
   return user
 }
+
+export const uploadAvatar = async (user, avatarName, opts = {}) => {
+  const { tx } = opts
+
+  await user.update({
+    avatarName,
+  }, {
+    transaction: tx,
+  })
+
+  return user
+}
