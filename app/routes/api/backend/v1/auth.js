@@ -80,7 +80,7 @@ export async function login(req, res, next) {
         res,
         status: 201,
         data: {
-          token: token, admin: AdminEntity.adminDetail(admin),
+          token: token, admin: await AdminEntity.adminDetail(admin),
         },
       })
     } else {
