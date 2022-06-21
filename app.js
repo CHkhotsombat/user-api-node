@@ -6,13 +6,18 @@ import { htmlStatus } from './app/utils/constants'
 import { router as indexRouter } from './app/routes'
 import _ from 'lodash'
 import { errorNotFound } from './app/utils/apiHelpers'
+
+global.__basedir = __dirname
 const app = express()
 
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
+
+// static
+app.use('/public', express.static(path.join(__dirname, 'public')))
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 // Router
 app.use('/', indexRouter)
