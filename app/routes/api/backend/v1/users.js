@@ -10,7 +10,7 @@ import {
 import { validateCreateUserSchema, validateUpdateUserSchema } from './schema/user.schema'
 import * as userEntity from './entities/user.entity'
 import { authorizeAdmin } from '../../../../middleware/authorize_admin'
-import { uploadFile } from '../../../../utils/uploadFile'
+import { uploadImage } from '../../../../utils/uploadFile'
 import _ from 'lodash'
 import { sequelize } from '../../../../models'
 import { userAvatarPath } from '../../../../utils/helpers'
@@ -18,7 +18,7 @@ import fs from 'fs'
 import path from 'path'
 
 export const router = express.Router()
-export const uploadAvatarImage = uploadFile({
+export const uploadAvatarImage = uploadImage({
   path: '/users/avatars',
   fieldName: 'avatar',
 })
