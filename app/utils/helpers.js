@@ -6,3 +6,6 @@ export const userAvatarUrl = (avatarName) => (
   process.env.HOST + userAvatarPath(avatarName)
 )
 
+export const privatePath = () => (
+  `${__basedir}/private`
+)

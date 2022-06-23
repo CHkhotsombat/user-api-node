@@ -1,28 +1,27 @@
 import multer from 'multer'
 import { errorValidateFailed } from './apiHelpers'
+import path from 'path'
 
-export const uploadFile = ({ path, fieldName }) => {
+export const uploadFile = ({ filePath, fieldName }) => {
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, `${__basedir}/uploads/${path}`)
+      cb(null, `${__basedir}/uploads/${filePath}`)
     },
     filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix + file.originalname)
+      cb(null, file.fieldname + '-' + randomSuffix() + file.originalname)
     },
   })
 
   return multer({ storage: storage }).single(fieldName)
 }
 
-export const uploadImage = ({ path, fieldName }) => {
+export const uploadImage = ({ filePath, fieldName }) => {
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, `${__basedir}/uploads/${path}`)
+      cb(null, `${__basedir}/uploads/${filePath}`)
     },
     filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix + file.originalname)
+      cb(null, file.fieldname + '-' + randomSuffix() + file.originalname)
     },
   })
 
@@ -43,3 +42,18 @@ export const uploadImage = ({ path, fieldName }) => {
     },
   }).single(fieldName)
 }
+
+export const uploadPrivateFile = ({ filePath, fieldName }) => {
+  const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, `${__basedir}/private/${filePath}`)
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + randomSuffix() + path.extname(file.originalname))
+    },
+  })
+
+  return multer({ storage: storage }).single(fieldName)
+}
+
+const randomSuffix = () => (Date.now() + '-' + Math.round(Math.random() * 1E9))
