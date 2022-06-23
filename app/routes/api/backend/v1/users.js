@@ -19,7 +19,7 @@ import path from 'path'
 
 export const router = express.Router()
 export const uploadAvatarImage = uploadImage({
-  path: '/users/avatars',
+  filePath: '/users/avatars',
   fieldName: 'avatar',
 })
 
