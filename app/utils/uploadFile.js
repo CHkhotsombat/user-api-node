@@ -56,4 +56,10 @@ export const uploadPrivateFile = ({ filePath, fieldName }) => {
   return multer({ storage: storage }).single(fieldName)
 }
 
+export const uploadBufferFile = ({ fieldName }) => {
+  const storage = multer.memoryStorage()
+
+  return multer({ storage: storage }).single(fieldName)
+}
+
 const randomSuffix = () => (Date.now() + '-' + Math.round(Math.random() * 1E9))

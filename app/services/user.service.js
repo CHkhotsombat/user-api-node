@@ -1,5 +1,6 @@
 import boom from '@hapi/boom'
 import models from '../models'
+import { cleanNullKeys } from '../utils/helpers'
 const User = models.User
 
 export const getUserList = async (params) => {
@@ -19,6 +20,31 @@ export const getUserList = async (params) => {
       'updatedAt',
     ],
   })
+
+  return users
+}
+
+export const findAllUsers = async (params, opts = {}) => {
+  const { tx } = opts
+  const { email } = params
+  const users = await User.findAll(
+    {
+      where: cleanNullKeys({
+        email,
+      }),
+      attributes: [
+        'id',
+        'firstName',
+        'lastName',
+        'email',
+        'status',
+        'createdAt',
+        'updatedAt',
+      ],
+    }, {
+      transaction: tx,
+    }
+  )
 
   return users
 }
@@ -44,6 +70,20 @@ export const findByEmail = async (email) => {
 
 export const createUser = async (params) => {
   return await User.create(params)
+}
+
+export const createBulkUsers = async (body, opts = {}) => {
+  const { tx } = opts
+  const result = await User.bulkCreate(
+    body,
+    {
+      fields: ['firstName', 'lastName', 'email'],
+      updateOnDuplicate: ['email'],
+      transaction: tx,
+    }
+  )
+
+  result
 }
 
 export const deleteUser = async (id) => {
