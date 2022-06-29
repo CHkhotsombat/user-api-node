@@ -1,4 +1,4 @@
-import { cleanNullKeys } from '../helpers/utility.helper'
+import { cleanNullKeys } from '../utils/helpers'
 import models from '../models'
 const { RoleAbility } = models
 
