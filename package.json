@@ -25,7 +25,8 @@
     "mysql2": "^2.3.3",
     "pug": "^3.0.2",
     "sequelize": "^6.16.2",
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.4.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.0",
