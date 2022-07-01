@@ -99,13 +99,13 @@ export async function importUsers(req, res, next) {
     ))
 
     // validate exist users
-    const emailes = _.map(to_import_users, 'email')
-    const users = await userService.findAllUsers({ email: emailes })
+    const emails = _.map(to_import_users, 'email')
+    const users = await userService.findAllUsers({ email: emails })
 
     if (!_.isEmpty(users)) {
-      const existEmailes = _.map(users, 'email')
+      const existEmails = _.map(users, 'email')
 
-      return next(errorValidateFailed({ message: `Duplicate users : ${existEmailes.join(', ')}` }))
+      return next(errorValidateFailed({ message: `Duplicate users : ${existEmails.join(', ')}` }))
     }
 
     // create bulk users
