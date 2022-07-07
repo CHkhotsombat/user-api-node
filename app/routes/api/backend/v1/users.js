@@ -1,5 +1,5 @@
 import express from 'express'
-import * as userService from '../../../../services/user.service'
+import * as UserService from '../../../../services/user.service'
 import {
   pagination,
   responseWithPaging,
@@ -41,7 +41,7 @@ export async function getUserList(req, res, next) {
     const { page, pageSize } = req.query
     const { limit, offset } = pagination(page, pageSize)
 
-    const results = await userService.getUserList({
+    const results = await UserService.getUserList({
       limit,
       offset,
     })
@@ -60,7 +60,7 @@ export async function createUser(req, res, next) {
     }
 
     // validate uniq email
-    const user = await userService.findByEmail(req.body.email)
+    const user = await UserService.findByEmail(req.body.email)
     if (user) {
       return next(
         errorValidateFailed({
@@ -69,7 +69,7 @@ export async function createUser(req, res, next) {
       )
     }
 
-    await userService.createUser(req.body)
+    await UserService.createUser(req.body)
 
     responseSuccess({ res, status: 201 })
   } catch (error) {
@@ -100,7 +100,7 @@ export async function importUsers(req, res, next) {
 
     // validate exist users
     const emails = _.map(to_import_users, 'email')
-    const users = await userService.findAllUsers({ email: emails })
+    const users = await UserService.findAllUsers({ email: emails })
 
     if (!_.isEmpty(users)) {
       const existEmails = _.map(users, 'email')
@@ -109,7 +109,7 @@ export async function importUsers(req, res, next) {
     }
 
     // create bulk users
-    await userService.createBulkUsers(to_import_users)
+    await UserService.createBulkUsers(to_import_users)
     await tx.commit()
 
     responseSuccess({ res, status: 201 })
@@ -121,7 +121,7 @@ export async function importUsers(req, res, next) {
 
 export async function findById(req, res, next) {
   try {
-    const user = await userService.findById(req.params.id)
+    const user = await UserService.findById(req.params.id)
 
     responseSuccess({ res, status: 200, data: userEntity.userDetail(user) })
   } catch (error) {
@@ -131,7 +131,7 @@ export async function findById(req, res, next) {
 
 export async function updateUser(req, res, next) {
   try {
-    const user = await userService.findById(req.params.id)
+    const user = await UserService.findById(req.params.id)
 
     const errors = validateUpdateUserSchema(req.body)
 
@@ -154,9 +154,9 @@ export async function uploadAvatar(req, res, next) {
 
   try {
     const filename = _.get(req, 'file.filename')
-    const user = await userService.findById(req.params.id)
+    const user = await UserService.findById(req.params.id)
     const avatarName = user.avatarName
-    const userResult = await userService.uploadAvatar(user, filename, { tx })
+    const _result = await UserService.uploadAvatar(user, filename, { tx })
     await tx.commit()
 
     // Remove old avatar
@@ -171,8 +171,8 @@ export async function uploadAvatar(req, res, next) {
 
 export async function deleteUser(req, res, next) {
   try {
-    await userService.findById(req.params.id)
-    await userService.deleteUser(req.params.id)
+    await UserService.findById(req.params.id)
+    await UserService.deleteUser(req.params.id)
 
     responseSuccess({ res })
   } catch (error) {
